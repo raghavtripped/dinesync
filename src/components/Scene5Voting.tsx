@@ -3,42 +3,46 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { SessionData } from '../types';
 import { cn } from '../lib/utils';
-import { ThumbsUp, Check } from 'lucide-react';
+import { Check, Calendar, MapPin } from 'lucide-react';
 
 interface Props {
   onNext: () => void;
   data: SessionData;
 }
 
+type Step = 'voting' | 'confirmed';
+
 export default function Scene5Voting({ onNext, data }: Props) {
+  const [step, setStep] = useState<Step>('voting');
   const [votes, setVotes] = useState<Record<string, number>>({});
   const [hasVoted, setHasVoted] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
+
+  // Clean up confetti on unmount
+  useEffect(() => {
+    return () => {
+      confetti.reset();
+    };
+  }, []);
 
   // Simulate incoming votes
   useEffect(() => {
     if (!hasVoted) return;
 
-    // Simulate others voting for the same thing the user voted for (to force consensus for demo)
-    // Or just default to the first one (Behrouz) if user picks something else?
-    // Let's just stack votes on the user's choice to make them feel influential, 
-    // OR stack on the "Best Match" (r1) to show the AI was right.
-    // The design doc says: "User taps Behrouz. Simulate 2 other votes coming in immediately."
-    
-    // Let's find what the user voted for
-    const userChoice = Object.keys(votes).find(k => votes[k] > 0);
-    if (!userChoice) return;
+    // Simulate meaningful vote flow (e.g., Night Canteen gets popular)
+    // Target winner: Night Canteen (r2)
+    const targetWinner = 'r2'; // Night Canteen
 
     const timeouts = [
       setTimeout(() => {
-        setVotes(prev => ({ ...prev, [userChoice]: (prev[userChoice] || 0) + 1 }));
+        setVotes(prev => ({ ...prev, [targetWinner]: (prev[targetWinner] || 0) + 1 }));
       }, 500),
       setTimeout(() => {
-        setVotes(prev => ({ ...prev, [userChoice]: (prev[userChoice] || 0) + 1 }));
+        setVotes(prev => ({ ...prev, [targetWinner]: (prev[targetWinner] || 0) + 1 }));
       }, 1200),
       setTimeout(() => {
-        setVotes(prev => ({ ...prev, [userChoice]: (prev[userChoice] || 0) + 1 }));
-        setWinner(userChoice);
+        setVotes(prev => ({ ...prev, [targetWinner]: (prev[targetWinner] || 0) + 1 }));
+        setWinner(targetWinner);
         triggerConfetti();
       }, 2000),
     ];
@@ -80,6 +84,67 @@ export default function Scene5Voting({ onNext, data }: Props) {
   };
 
   const maxVotes = 4; // 4 participants
+
+  const handleConfirmReservation = () => {
+    setStep('confirmed');
+    confetti.reset(); // Clear confetti when moving to confirmation
+    
+    // Auto timeout fallback
+    setTimeout(() => {
+       console.log("Auto-advancing to split scene...");
+       onNext();
+    }, 5000);
+  };
+
+  if (step === 'confirmed') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col h-full items-center justify-center p-6 text-center space-y-6"
+      >
+        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+          <Check className="w-12 h-12 text-white" />
+        </div>
+        
+        <div>
+          <h2 className="text-2xl font-bold mb-2">Reservation Confirmed</h2>
+          <p className="text-gray-400">Table for 6 reserved.</p>
+        </div>
+
+        <div className="bg-white/10 rounded-2xl p-6 w-full space-y-4">
+          <div className="flex items-start gap-4 text-left">
+             <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
+                <img src={data.recommendations.find(r => r.id === winner)?.image} alt="Restaurant" className="w-full h-full object-cover" />
+             </div>
+             <div>
+               <h3 className="font-bold text-lg">{data.recommendations.find(r => r.id === winner)?.name}</h3>
+               <div className="flex items-center gap-1 text-sm text-gray-400 mt-1">
+                 <MapPin className="w-3 h-3" />
+                 <span>1.2 km away</span>
+               </div>
+               <div className="flex items-center gap-1 text-sm text-gray-400">
+                 <Calendar className="w-3 h-3" />
+                 <span>Today, 8:00 PM</span>
+               </div>
+             </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            console.log("Split button clicked");
+            onNext();
+          }}
+          style={{ zIndex: 1000 }}
+          className="w-full btn-primary mt-8 relative cursor-pointer"
+        >
+          Split the Bill
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -158,10 +223,10 @@ export default function Scene5Voting({ onNext, data }: Props) {
               It's decided! We're eating <strong>{data.recommendations.find(r => r.id === winner)?.name}</strong>.
             </div>
             <button
-              onClick={onNext}
+              onClick={handleConfirmReservation}
               className="w-full btn-primary"
             >
-              Proceed to Pay
+              Confirm Reservation
             </button>
           </motion.div>
         )}
@@ -169,4 +234,3 @@ export default function Scene5Voting({ onNext, data }: Props) {
     </motion.div>
   );
 }
-
