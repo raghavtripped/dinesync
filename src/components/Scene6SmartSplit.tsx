@@ -11,7 +11,7 @@ interface Props {
 type Step = 'receipt' | 'split-config' | 'final-split';
 
 export default function Scene6SmartSplit({ data }: Props) {
-  const [step, setStep] = useState<Step>('receipt');
+  const [step, setStep] = useState<Step>('split-config');
   const [hasPaid, setHasPaid] = useState(false);
   
   // Bill Split State (Preset totals for demo)
@@ -82,6 +82,15 @@ export default function Scene6SmartSplit({ data }: Props) {
               </h2>
               <p className="text-gray-400 text-sm">Categorize items for smart splitting.</p>
            </header>
+
+           {/* Mini Receipt Summary */}
+           <div className="bg-white/5 rounded-lg p-4 flex justify-between items-center text-sm">
+              <div className="flex items-center gap-2 text-gray-300">
+                <Receipt className="w-4 h-4" />
+                <span>Total Bill</span>
+              </div>
+              <span className="font-bold text-lg">₹930</span>
+           </div>
 
            <div className="space-y-6">
               <div className="space-y-4">
