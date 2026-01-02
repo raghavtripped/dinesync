@@ -251,6 +251,7 @@ export default function Scene5Voting({ onNext, data }: Props) {
          >
            Split for People
          </button>
+        </div>
       </motion.div>
     );
   }
