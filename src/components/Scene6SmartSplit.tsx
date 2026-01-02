@@ -31,11 +31,6 @@ export default function Scene6SmartSplit({ data }: Props) {
 
   // Mock assigning splits based on preferences (Demo Logic)
   useEffect(() => {
-     // Aditya (Veg, Mocktail)
-     // Sneha (Non-Veg, Cocktail)
-     // Kabir (Veg, Cocktail)
-     // Host (Non-Veg, Mocktail)
-     
      // Simple weighted split logic simulation
      const totalVegPeople = 2; // Aditya, Kabir
      const totalNonVegPeople = 2; // Sneha, Host
@@ -48,7 +43,7 @@ export default function Scene6SmartSplit({ data }: Props) {
 
      setParticipants(prev => prev.map(p => {
         let amt = 0;
-        let tags = [];
+        let tags: string[] = [];
         if (p.name === 'Aditya') { amt = vegPerPerson + mocktailSplit; tags=['Veg', 'Mocktail']; }
         else if (p.name === 'Sneha') { amt = nonVegPerPerson + cocktailSplit; tags=['Non-Veg', 'Cocktail']; }
         else if (p.name === 'Kabir') { amt = vegPerPerson + cocktailSplit; tags=['Veg', 'Cocktail']; }
@@ -70,11 +65,14 @@ export default function Scene6SmartSplit({ data }: Props) {
   const userShare = 265; 
   const totalPaid = (hasPaid ? userShare : 0) + participants.filter(p => p.paymentStatus === 'paid').reduce((acc, _) => acc + 220, 0);
 
+  // STEP 2: CATEGORIZATION
   if (step === 'split-config') {
      return (
         <motion.div
+           key="config"
            initial={{ opacity: 0, x: 20 }}
            animate={{ opacity: 1, x: 0 }}
+           exit={{ opacity: 0, x: -20 }}
            className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
         >
            <header className="space-y-1">
@@ -160,127 +158,15 @@ export default function Scene6SmartSplit({ data }: Props) {
      );
   }
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="flex flex-col h-full bg-gray-900 relative"
-    >
-      {/* Receipt View */}
-      {step === 'receipt' && (
-         <>
-            <div className="flex-1 p-6 overflow-y-auto pb-48">
-               <div className="bg-white text-black p-6 rounded-t-xl shadow-xl relative pb-12" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 98%)' }}>
-               <div className="text-center border-b-2 border-dashed border-gray-300 pb-4 mb-4">
-                  <h2 className="font-bold text-xl uppercase tracking-widest flex items-center justify-center gap-2">
-                     <Receipt className="w-5 h-5" /> Receipt
-                  </h2>
-                  <p className="text-xs text-gray-500">{new Date().toLocaleString()}</p>
-               </div>
-
-               <div className="space-y-4">
-                  {data.bill_details.items.map((item) => (
-                     <div key={item.id} className="flex justify-between items-start">
-                     <div>
-                        <div className="font-bold text-sm">{item.name}</div>
-                        <div className="flex -space-x-1 mt-1">
-                           {item.assigned_to.includes('all') ? (
-                              <span className="text-[10px] bg-gray-200 px-1 rounded">Shared (4)</span>
-                           ) : (
-                              item.assigned_to.map(id => {
-                              const p = data.session.participants.find(part => part.id === id);
-                              return p ? <span key={id} className="w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center text-[8px]">{p.avatar}</span> : null;
-                              })
-                           )}
-                        </div>
-                     </div>
-                     <div className="font-mono">₹{item.price}</div>
-                     </div>
-                  ))}
-                  
-                  <div className="border-t-2 border-dashed border-gray-300 pt-2 flex justify-between font-bold text-lg">
-                     <span>Total</span>
-                     <span>₹930</span>
-                  </div>
-               </div>
-               </div>
-            </div>
-
-            {/* Bottom Sheet for Payment */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gray-800 rounded-t-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-20">
-               <div className="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-6" />
-               
-               <div className="flex justify-between items-end mb-6">
-               <div>
-                  <div className="text-gray-400 text-sm mb-1">Your Share</div>
-                  <div className="text-4xl font-bold text-white flex items-center gap-1">
-                     ₹{userShare}
-                     {hasPaid && <Check className="w-6 h-6 text-green-500" />}
-                  </div>
-               </div>
-               <div className="text-right">
-                  <div className="text-xs text-gray-400 mb-1">Total Collected</div>
-                  <div className="text-swiggy-orange font-mono">₹{totalPaid} / ₹930</div>
-               </div>
-               </div>
-
-               {/* Buttons Row */}
-               <div className="flex flex-col gap-3 mb-6">
-                  {/* Primary Action for Host: Split */}
-                   <button
-                     onClick={() => setStep('split-config')}
-                     className="w-full py-4 rounded-xl font-bold text-lg bg-swiggy-orange text-white shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
-                  >
-                     <Calculator className="w-5 h-5" /> Split Bill & Request
-                  </button>
-
-                  {!hasPaid ? (
-                     <button
-                        onClick={handlePay}
-                        className="w-full py-3 rounded-xl font-medium text-sm bg-white/10 text-white hover:bg-white/20 active:scale-95 transition-all"
-                     >
-                        Just Pay My Share (₹{userShare})
-                     </button>
-                  ) : (
-                     <button disabled className="w-full py-3 rounded-xl font-medium text-sm bg-gray-700 text-green-400 flex items-center justify-center gap-2">
-                        <Check className="w-4 h-4" /> You Paid
-                     </button>
-                  )}
-               </div>
-
-               {/* Status List */}
-               <div className="space-y-3">
-               <div className="flex justify-between items-center text-sm">
-                  <span className="flex items-center gap-2">
-                     <span className="w-6 h-6 rounded-full bg-swiggy-orange flex items-center justify-center text-xs">👑</span>
-                     You
-                  </span>
-                  {hasPaid ? <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span> : <span className="text-yellow-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Paying...</span>}
-               </div>
-               {participants.map(p => (
-                  <div key={p.id} className="flex justify-between items-center text-sm">
-                     <span className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-xs">{p.avatar}</span>
-                        {p.name}
-                     </span>
-                     {p.paymentStatus === 'paid' ? (
-                        <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span>
-                     ) : (
-                        <span className="text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3"/> Pending</span>
-                     )}
-                  </div>
-               ))}
-               </div>
-            </div>
-         </>
-      )}
-
-      {step === 'final-split' && (
-         <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             animate={{ opacity: 1, scale: 1 }}
-             className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
-         >
+  // STEP 3: FINAL SUMMARY
+  if (step === 'final-split') {
+     return (
+        <motion.div
+           key="final"
+           initial={{ opacity: 0, x: 20 }}
+           animate={{ opacity: 1, x: 0 }}
+           className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
+        >
              <div className="text-center space-y-2">
                <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
                    Split Summary
@@ -331,8 +217,117 @@ export default function Scene6SmartSplit({ data }: Props) {
                    <Share2 className="w-5 h-5" /> Settle on Splitwise
                 </button>
              </div>
-         </motion.div>
-      )}
+        </motion.div>
+     );
+  }
+
+  // STEP 1: RECEIPT (Default)
+  return (
+    <motion.div
+      key="receipt"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex flex-col h-full bg-gray-900 relative"
+    >
+      <div className="flex-1 p-6 overflow-y-auto pb-48">
+         <div className="bg-white text-black p-6 rounded-t-xl shadow-xl relative pb-12" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 98%)' }}>
+         <div className="text-center border-b-2 border-dashed border-gray-300 pb-4 mb-4">
+            <h2 className="font-bold text-xl uppercase tracking-widest flex items-center justify-center gap-2">
+               <Receipt className="w-5 h-5" /> Receipt
+            </h2>
+            <p className="text-xs text-gray-500">{new Date().toLocaleString()}</p>
+         </div>
+
+         <div className="space-y-4">
+            {data.bill_details.items.map((item) => (
+               <div key={item.id} className="flex justify-between items-start">
+               <div>
+                  <div className="font-bold text-sm">{item.name}</div>
+                  <div className="flex -space-x-1 mt-1">
+                     {item.assigned_to.includes('all') ? (
+                        <span className="text-[10px] bg-gray-200 px-1 rounded">Shared (4)</span>
+                     ) : (
+                        item.assigned_to.map(id => {
+                        const p = data.session.participants.find(part => part.id === id);
+                        return p ? <span key={id} className="w-4 h-4 rounded-full bg-gray-300 flex items-center justify-center text-[8px]">{p.avatar}</span> : null;
+                        })
+                     )}
+                  </div>
+               </div>
+               <div className="font-mono">₹{item.price}</div>
+               </div>
+            ))}
+            
+            <div className="border-t-2 border-dashed border-gray-300 pt-2 flex justify-between font-bold text-lg">
+               <span>Total</span>
+               <span>₹930</span>
+            </div>
+         </div>
+         </div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 bg-gray-800 rounded-t-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-20">
+         <div className="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-6" />
+         
+         <div className="flex justify-between items-end mb-6">
+         <div>
+            <div className="text-gray-400 text-sm mb-1">Your Share</div>
+            <div className="text-4xl font-bold text-white flex items-center gap-1">
+               ₹{userShare}
+               {hasPaid && <Check className="w-6 h-6 text-green-500" />}
+            </div>
+         </div>
+         <div className="text-right">
+            <div className="text-xs text-gray-400 mb-1">Total Collected</div>
+            <div className="text-swiggy-orange font-mono">₹{totalPaid} / ₹930</div>
+         </div>
+         </div>
+
+         <div className="flex flex-col gap-3 mb-6">
+             <button
+               onClick={() => setStep('split-config')}
+               className="w-full py-4 rounded-xl font-bold text-lg bg-swiggy-orange text-white shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+               <Calculator className="w-5 h-5" /> Generate Bill & Split
+            </button>
+
+            {!hasPaid ? (
+               <button
+                  onClick={handlePay}
+                  className="w-full py-3 rounded-xl font-medium text-sm bg-white/10 text-white hover:bg-white/20 active:scale-95 transition-all"
+               >
+                  Just Pay My Share (₹{userShare})
+               </button>
+            ) : (
+               <button disabled className="w-full py-3 rounded-xl font-medium text-sm bg-gray-700 text-green-400 flex items-center justify-center gap-2">
+                  <Check className="w-4 h-4" /> You Paid
+               </button>
+            )}
+         </div>
+
+         <div className="space-y-3">
+         <div className="flex justify-between items-center text-sm">
+            <span className="flex items-center gap-2">
+               <span className="w-6 h-6 rounded-full bg-swiggy-orange flex items-center justify-center text-xs">👑</span>
+               You
+            </span>
+            {hasPaid ? <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span> : <span className="text-yellow-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Paying...</span>}
+         </div>
+         {participants.map(p => (
+            <div key={p.id} className="flex justify-between items-center text-sm">
+               <span className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-xs">{p.avatar}</span>
+                  {p.name}
+               </span>
+               {p.paymentStatus === 'paid' ? (
+                  <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span>
+               ) : (
+                  <span className="text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3"/> Pending</span>
+               )}
+            </div>
+         ))}
+         </div>
+      </div>
     </motion.div>
   );
 }

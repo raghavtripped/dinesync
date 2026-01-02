@@ -134,13 +134,13 @@ export default function Scene5Voting({ onNext, data }: Props) {
         <button
           type="button"
           onClick={() => {
-            console.log("Split button clicked");
+            console.log("Generate Bill & Split button clicked");
             onNext();
           }}
           style={{ zIndex: 1000 }}
           className="w-full btn-primary mt-8 relative cursor-pointer"
         >
-          Split the Bill
+          Generate Bill & Split
         </button>
       </motion.div>
     );
