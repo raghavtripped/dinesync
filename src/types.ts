@@ -37,5 +37,5 @@ export interface SessionData {
   bill_details: BillDetails;
 }
 
-export type AppStep = 'invitation' | 'lobby' | 'preference' | 'revelation' | 'voting' | 'split';
+export type AppStep = 'invitation' | 'lobby' | 'preference' | 'revelation' | 'voting';
 

@@ -16,7 +16,7 @@ function App() {
   const [step, setStep] = useState<AppStep>('invitation');
 
   const nextStep = () => {
-    const steps: AppStep[] = ['invitation', 'lobby', 'preference', 'revelation', 'voting', 'split'];
+    const steps: AppStep[] = ['invitation', 'lobby', 'preference', 'revelation', 'voting'];
     const currentIndex = steps.indexOf(step);
     if (currentIndex < steps.length - 1) {
       setStep(steps[currentIndex + 1]);
@@ -45,9 +45,6 @@ function App() {
           )}
           {step === 'voting' && (
             <Scene5Voting key="voting" onNext={nextStep} data={data} />
-          )}
-          {step === 'split' && (
-            <Scene6SmartSplit key="split" data={data} />
           )}
         </AnimatePresence>
       </main>

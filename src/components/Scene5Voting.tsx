@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { SessionData } from '../types';
 import { cn } from '../lib/utils';
-import { Check, Calendar, MapPin } from 'lucide-react';
+import { Check, Calendar, MapPin, Calculator, Receipt } from 'lucide-react';
 
 interface Props {
   onNext: () => void;
@@ -18,6 +18,43 @@ export default function Scene5Voting({ onNext, data }: Props) {
   const [hasVoted, setHasVoted] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
 
+  // Bill split state
+  const [vegShare, setVegShare] = useState(1400);
+  const [nonVegShare, setNonVegShare] = useState(1800);
+  const [mocktail, setMocktail] = useState(300);
+  const [cocktail, setCocktail] = useState(900);
+
+  const totalCalculated = vegShare + nonVegShare + mocktail + cocktail;
+
+  const [participants, setParticipants] = useState(data.session.participants.map(p => ({
+    ...p,
+    paymentStatus: 'pending',
+    splitAmount: 0,
+    tags: [] as string[]
+  })));
+
+  // Mock assigning splits based on preferences
+  useEffect(() => {
+     const totalVegPeople = 2;
+     const totalNonVegPeople = 2;
+
+     const vegPerPerson = vegShare / totalVegPeople;
+     const nonVegPerPerson = nonVegShare / totalNonVegPeople;
+
+     const mocktailSplit = mocktail / 2;
+     const cocktailSplit = cocktail / 2;
+
+     setParticipants(prev => prev.map(p => {
+        let amt = 0;
+        let tags: string[] = [];
+        if (p.name === 'Aditya') { amt = vegPerPerson + mocktailSplit; tags=['Veg', 'Mocktail']; }
+        else if (p.name === 'Sneha') { amt = nonVegPerPerson + cocktailSplit; tags=['Non-Veg', 'Cocktail']; }
+        else if (p.name === 'Kabir') { amt = vegPerPerson + cocktailSplit; tags=['Veg', 'Cocktail']; }
+        else { amt = 0; }
+        return { ...p, splitAmount: Math.round(amt), tags };
+     }));
+  }, [vegShare, nonVegShare, mocktail, cocktail]);
+
   // Clean up confetti on unmount
   useEffect(() => {
     return () => {
@@ -29,9 +66,7 @@ export default function Scene5Voting({ onNext, data }: Props) {
   useEffect(() => {
     if (!hasVoted) return;
 
-    // Simulate meaningful vote flow (e.g., Night Canteen gets popular)
-    // Target winner: Night Canteen (r2)
-    const targetWinner = 'r2'; // Night Canteen
+    const targetWinner = 'r2';
 
     const timeouts = [
       setTimeout(() => {
@@ -83,17 +118,11 @@ export default function Scene5Voting({ onNext, data }: Props) {
     setHasVoted(true);
   };
 
-  const maxVotes = 4; // 4 participants
+  const maxVotes = 4;
 
   const handleConfirmReservation = () => {
     setStep('confirmed');
-    confetti.reset(); // Clear confetti when moving to confirmation
-    
-    // Auto timeout fallback
-    setTimeout(() => {
-       console.log("Auto-advancing to split scene...");
-       onNext();
-    }, 5000);
+    confetti.reset();
   };
 
   if (step === 'confirmed') {
@@ -101,38 +130,127 @@ export default function Scene5Voting({ onNext, data }: Props) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col h-full items-center justify-center p-6 text-center space-y-6"
+        className="flex flex-col h-full p-6 space-y-8 overflow-y-auto"
       >
-        <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.4)]">
-          <Check className="w-12 h-12 text-white" />
-        </div>
-        
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Reservation Confirmed</h2>
-          <p className="text-gray-400">Table for 6 reserved.</p>
-        </div>
+        {/* Reservation Confirmed Section */}
+        <div className="text-center space-y-6">
+          <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.4)] mx-auto">
+            <Check className="w-12 h-12 text-white" />
+          </div>
 
-        <div className="bg-white/10 rounded-2xl p-6 w-full space-y-4">
-          <div className="flex items-start gap-4 text-left">
-             <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
-                <img src={data.recommendations.find(r => r.id === winner)?.image} alt="Restaurant" className="w-full h-full object-cover" />
-             </div>
-             <div>
-               <h3 className="font-bold text-lg">{data.recommendations.find(r => r.id === winner)?.name}</h3>
-               <div className="flex items-center gap-1 text-sm text-gray-400 mt-1">
-                 <MapPin className="w-3 h-3" />
-                 <span>1.2 km away</span>
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Reservation Confirmed</h2>
+            <p className="text-gray-400">Table for 6 reserved.</p>
+          </div>
+
+          <div className="bg-white/10 rounded-2xl p-6 w-full max-w-md mx-auto space-y-4">
+            <div className="flex items-start gap-4 text-left">
+               <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
+                  <img src={data.recommendations.find(r => r.id === winner)?.image} alt="Restaurant" className="w-full h-full object-cover" />
                </div>
-               <div className="flex items-center gap-1 text-sm text-gray-400">
-                 <Calendar className="w-3 h-3" />
-                 <span>Today, 8:00 PM</span>
+               <div>
+                 <h3 className="font-bold text-lg">{data.recommendations.find(r => r.id === winner)?.name}</h3>
+                 <div className="flex items-center gap-1 text-sm text-gray-400 mt-1">
+                   <MapPin className="w-3 h-3" />
+                   <span>1.2 km away</span>
+                 </div>
+                 <div className="flex items-center gap-1 text-sm text-gray-400">
+                   <Calendar className="w-3 h-3" />
+                   <span>Today, 8:00 PM</span>
+                 </div>
                </div>
-             </div>
+            </div>
           </div>
         </div>
 
-        {/* Removed button, auto-advancing */}
-        <p className="text-sm text-gray-500 animate-pulse">Generating bill...</p>
+        {/* Bill Split Section */}
+        <div className="space-y-6">
+          <header className="space-y-1 text-center">
+            <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
+               <Calculator className="w-6 h-6 text-swiggy-orange" />
+               Bill Split (Simulated)
+            </h2>
+            <p className="text-gray-400 text-sm">Categorize items for smart splitting.</p>
+          </header>
+
+          {/* Mini Receipt Summary */}
+          <div className="bg-white/5 rounded-lg p-4 flex justify-between items-center text-sm">
+            <div className="flex items-center gap-2 text-gray-300">
+              <Receipt className="w-4 h-4" />
+              <span>Total Bill</span>
+            </div>
+            <span className="font-bold text-lg">₹930</span>
+          </div>
+
+          <div className="space-y-4">
+            <div className="glass-card p-4 space-y-4">
+               <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase">Veg Dishes Total</label>
+                  <div className="flex items-center gap-2">
+                     <span className="text-gray-400">₹</span>
+                     <input
+                        type="number"
+                        value={vegShare}
+                        onChange={e => setVegShare(Number(e.target.value))}
+                        className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                     />
+                  </div>
+               </div>
+               <div className="h-px bg-white/10" />
+               <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase">Non-Veg Dishes Total</label>
+                  <div className="flex items-center gap-2">
+                     <span className="text-gray-400">₹</span>
+                     <input
+                        type="number"
+                        value={nonVegShare}
+                        onChange={e => setNonVegShare(Number(e.target.value))}
+                        className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                     />
+                  </div>
+               </div>
+            </div>
+
+            <div className="glass-card p-4 space-y-4">
+               <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase">Mocktail Add-on</label>
+                  <div className="flex items-center gap-2">
+                     <span className="text-gray-400">₹</span>
+                     <input
+                        type="number"
+                        value={mocktail}
+                        onChange={e => setMocktail(Number(e.target.value))}
+                        className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                     />
+                  </div>
+               </div>
+               <div className="h-px bg-white/10" />
+               <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-400 uppercase">Cocktail Add-on</label>
+                  <div className="flex items-center gap-2">
+                     <span className="text-gray-400">₹</span>
+                     <input
+                        type="number"
+                        value={cocktail}
+                        onChange={e => setCocktail(Number(e.target.value))}
+                        className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                     />
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div className="glass-card bg-swiggy-orange/10 border-swiggy-orange/30 p-4 flex justify-between items-center">
+            <span className="font-bold">Computed Total</span>
+            <span className="text-2xl font-bold text-swiggy-orange">₹{totalCalculated}</span>
+         </div>
+
+         <button
+           onClick={onNext}
+           className="w-full btn-primary flex items-center justify-center gap-2"
+         >
+           Split for People
+         </button>
       </motion.div>
     );
   }
