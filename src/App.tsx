@@ -50,6 +50,10 @@ function App() {
             <Scene6SmartSplit key="split" data={data} />
           )}
         </AnimatePresence>
+        {/* Debug Overlay */}
+        <div className="fixed top-0 right-0 bg-black/50 text-xs text-white p-2 pointer-events-none z-[9999]">
+          Step: {step}
+        </div>
       </main>
     </div>
   );

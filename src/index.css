@@ -13,5 +13,11 @@
 }
 
 .btn-primary {
-  @apply bg-[#FC8019] text-white font-bold py-3 px-6 rounded-full active:scale-95 transition-all shadow-lg hover:shadow-orange-500/20;
+  @apply bg-[#FC8019] text-white font-bold py-3 px-6 rounded-full active:scale-95 transition-all shadow-lg hover:shadow-orange-500/20 cursor-pointer;
+}
+
+/* Fix for canvas-confetti blocking clicks */
+canvas {
+  pointer-events: none !important;
+  z-index: 50 !important;
 }
