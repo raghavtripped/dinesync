@@ -19,10 +19,10 @@ export default function Scene5Voting({ onNext, data }: Props) {
   const [winner, setWinner] = useState<string | null>(null);
 
   // Bill split state
-  const [vegShare, setVegShare] = useState(1400);
-  const [nonVegShare, setNonVegShare] = useState(1800);
-  const [mocktail, setMocktail] = useState(300);
-  const [cocktail, setCocktail] = useState(900);
+  const [vegShare, setVegShare] = useState(400);
+  const [nonVegShare, setNonVegShare] = useState(350);
+  const [mocktail, setMocktail] = useState(90);
+  const [cocktail, setCocktail] = useState(90);
 
   const totalCalculated = vegShare + nonVegShare + mocktail + cocktail;
 
