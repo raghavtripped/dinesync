@@ -10,7 +10,7 @@ interface Props {
   data: SessionData;
 }
 
-type Step = 'voting' | 'confirmed';
+type Step = 'voting' | 'confirmed' | 'splitwise';
 
 export default function Scene5Voting({ onNext, data }: Props) {
   const [step, setStep] = useState<Step>('voting');
@@ -246,11 +246,84 @@ export default function Scene5Voting({ onNext, data }: Props) {
          </div>
 
          <button
-           onClick={onNext}
+           onClick={() => setStep('splitwise')}
            className="w-full btn-primary flex items-center justify-center gap-2"
          >
-           Split for People
+           Split on Splitwise
          </button>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (step === 'splitwise') {
+    return (
+      <motion.div
+        key="splitwise"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
+      >
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
+            <span className="text-green-500">✓</span> Split Created
+          </h2>
+          <p className="text-gray-400 text-sm">Everyone has been notified via Splitwise.</p>
+        </div>
+
+        <div className="space-y-4">
+          {participants.map(p => (
+            <div key={p.id} className="glass-card p-4 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-lg border border-white/10">
+                  {p.avatar}
+                </div>
+                <div>
+                  <div className="font-bold">{p.name}</div>
+                  <div className="flex gap-1 mt-1">
+                    {p.tags.map(t => (
+                      <span key={t} className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="font-mono text-xl font-bold text-swiggy-orange">₹{p.splitAmount}</div>
+            </div>
+          ))}
+
+          {/* Host Yourself */}
+          <div className="glass-card p-4 flex justify-between items-center border-swiggy-orange/30">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-swiggy-orange flex items-center justify-center text-lg text-white">
+                👑
+              </div>
+              <div>
+                <div className="font-bold">You</div>
+                <div className="flex gap-1 mt-1">
+                  <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">Non-Veg</span>
+                  <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">Mocktail</span>
+                </div>
+              </div>
+            </div>
+            <div className="font-mono text-xl font-bold text-white">₹{Math.round((350/2) + (90/2))}</div>
+          </div>
+        </div>
+
+        <div className="glass-card bg-green-500/10 border-green-500/30 p-4 flex justify-between items-center">
+          <span className="font-bold">Total Split</span>
+          <span className="text-xl font-bold text-green-400">₹{totalCalculated}</span>
+        </div>
+
+        <div className="space-y-3">
+          <button className="w-full py-4 rounded-xl font-bold text-lg bg-[#5BC5A7] text-white shadow-lg flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+            Open Splitwise App
+          </button>
+          <button
+            onClick={onNext}
+            className="w-full py-3 rounded-xl font-medium text-sm bg-white/10 text-white hover:bg-white/20 active:scale-95 transition-all"
+          >
+            Done
+          </button>
         </div>
       </motion.div>
     );
