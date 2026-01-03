@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Clock, Calculator, ArrowRight, Share2, Receipt } from 'lucide-react';
 import { SessionData } from '../types';
-import { cn } from '../lib/utils';
 
 interface Props {
   data: SessionData;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { AppStep, SessionData } from './types';
 import rawData from './features/dinesync-smart-content.json';
 
@@ -8,7 +8,6 @@ import Scene2Lobby from './components/Scene2Lobby';
 import Scene3Preference from './components/Scene3Preference';
 import Scene4AIRevelation from './components/Scene4AIRevelation';
 import Scene5Voting from './components/Scene5Voting';
-import Scene6SmartSplit from './components/Scene6SmartSplit';
 
 const data = rawData as SessionData;
 

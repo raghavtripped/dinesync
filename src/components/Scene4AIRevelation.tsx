@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, IndianRupee } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { SessionData } from '../types';
 import { cn } from '../lib/utils';
 
