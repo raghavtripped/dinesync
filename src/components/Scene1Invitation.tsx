@@ -57,19 +57,19 @@ export default function Scene1Invitation({ onNext }: Props) {
           viewState !== 'setup' ? "opacity-50 pointer-events-none scale-95" : ""
         )}>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-400 uppercase tracking-wider">Group Name</label>
+            <label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Group Name</label>
             <input
               type="text"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-swiggy-orange transition-colors"
+              className="w-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-swiggy-orange transition-colors"
               placeholder="e.g. Birthday Bash"
             />
           </div>
 
           <div className="space-y-4 pt-2">
             <div className="flex justify-between items-center">
-              <label className="text-sm font-medium text-gray-400 uppercase tracking-wider">Expected People</label>
+              <label className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Expected People</label>
               <span className="text-swiggy-orange font-bold text-xl">{participantCount}</span>
             </div>
             <input
@@ -78,7 +78,7 @@ export default function Scene1Invitation({ onNext }: Props) {
               max="20"
               value={participantCount}
               onChange={(e) => setParticipantCount(Number(e.target.value))}
-              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
             />
             <div className="flex justify-between text-xs text-gray-500">
               <span>Just us</span>
@@ -146,12 +146,12 @@ export default function Scene1Invitation({ onNext }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-4 text-center"
               >
-                <div className="text-sm text-gray-400">
+                <div className="text-sm text-gray-500 dark:text-gray-400">
                    You're all set! Join the lobby.
                  </div>
                 <button
                   onClick={handleOpenInvite}
-                  className="w-full py-4 rounded-xl font-bold text-lg bg-white text-black hover:bg-gray-100 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-xl"
+                  className="w-full py-4 rounded-xl font-bold text-lg bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-xl"
                 >
                   Open Invite Link <ArrowRight className="w-5 h-5" />
                 </button>
@@ -167,7 +167,7 @@ export default function Scene1Invitation({ onNext }: Props) {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 border border-white/10 z-50 whitespace-nowrap"
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 border border-gray-200 dark:border-white/10 z-50 whitespace-nowrap"
         >
           <div className="w-2 h-2 rounded-full bg-green-500" />
           Lobby Created

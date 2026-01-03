@@ -75,47 +75,47 @@ export default function Scene6SmartSplit({ data }: Props) {
            className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
         >
            <header className="space-y-1">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                  <Calculator className="w-6 h-6 text-swiggy-orange" />
                  Bill Split (Simulated)
               </h2>
-              <p className="text-gray-400 text-sm">Categorize items for smart splitting.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">Categorize items for smart splitting.</p>
            </header>
 
            {/* Mini Receipt Summary */}
-           <div className="bg-white/5 rounded-lg p-4 flex justify-between items-center text-sm">
-              <div className="flex items-center gap-2 text-gray-300">
+           <div className="bg-white dark:bg-white/5 rounded-lg p-4 flex justify-between items-center text-sm shadow-sm border border-gray-100 dark:border-transparent">
+              <div className="flex items-center gap-2 text-gray-500 dark:text-gray-300">
                 <Receipt className="w-4 h-4" />
                 <span>Total Bill</span>
               </div>
-              <span className="font-bold text-lg">₹930</span>
+              <span className="font-bold text-lg text-gray-900 dark:text-white">₹930</span>
            </div>
 
            <div className="space-y-6">
               <div className="space-y-4">
                  <div className="glass-card p-4 space-y-4">
                     <div className="space-y-2">
-                       <label className="text-xs font-bold text-gray-400 uppercase">Veg Dishes Total</label>
+                       <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Veg Dishes Total</label>
                        <div className="flex items-center gap-2">
                           <span className="text-gray-400">₹</span>
                           <input 
                              type="number" 
                              value={vegShare} 
                              onChange={e => setVegShare(Number(e.target.value))}
-                             className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                             className="bg-transparent text-xl font-bold w-full focus:outline-none text-gray-900 dark:text-white"
                           />
                        </div>
                     </div>
-                    <div className="h-px bg-white/10" />
+                    <div className="h-px bg-gray-200 dark:bg-white/10" />
                     <div className="space-y-2">
-                       <label className="text-xs font-bold text-gray-400 uppercase">Non-Veg Dishes Total</label>
+                       <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Non-Veg Dishes Total</label>
                        <div className="flex items-center gap-2">
                           <span className="text-gray-400">₹</span>
                           <input 
                              type="number" 
                              value={nonVegShare} 
                              onChange={e => setNonVegShare(Number(e.target.value))}
-                             className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                             className="bg-transparent text-xl font-bold w-full focus:outline-none text-gray-900 dark:text-white"
                           />
                        </div>
                     </div>
@@ -123,27 +123,27 @@ export default function Scene6SmartSplit({ data }: Props) {
 
                  <div className="glass-card p-4 space-y-4">
                     <div className="space-y-2">
-                       <label className="text-xs font-bold text-gray-400 uppercase">Mocktail Add-on</label>
+                       <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Mocktail Add-on</label>
                        <div className="flex items-center gap-2">
                           <span className="text-gray-400">₹</span>
                           <input 
                              type="number" 
                              value={mocktail} 
                              onChange={e => setMocktail(Number(e.target.value))}
-                             className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                             className="bg-transparent text-xl font-bold w-full focus:outline-none text-gray-900 dark:text-white"
                           />
                        </div>
                     </div>
-                    <div className="h-px bg-white/10" />
+                    <div className="h-px bg-gray-200 dark:bg-white/10" />
                     <div className="space-y-2">
-                       <label className="text-xs font-bold text-gray-400 uppercase">Cocktail Add-on</label>
+                       <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Cocktail Add-on</label>
                        <div className="flex items-center gap-2">
                           <span className="text-gray-400">₹</span>
                           <input 
                              type="number" 
                              value={cocktail} 
                              onChange={e => setCocktail(Number(e.target.value))}
-                             className="bg-transparent text-xl font-bold w-full focus:outline-none"
+                             className="bg-transparent text-xl font-bold w-full focus:outline-none text-gray-900 dark:text-white"
                           />
                        </div>
                     </div>
@@ -151,8 +151,8 @@ export default function Scene6SmartSplit({ data }: Props) {
               </div>
            </div>
 
-           <div className="glass-card bg-swiggy-orange/10 border-swiggy-orange/30 p-4 flex justify-between items-center">
-              <span className="font-bold">Computed Total</span>
+           <div className="glass-card bg-orange-50 dark:bg-swiggy-orange/10 border-orange-200 dark:border-swiggy-orange/30 p-4 flex justify-between items-center">
+              <span className="font-bold text-gray-900 dark:text-white">Computed Total</span>
               <span className="text-2xl font-bold text-swiggy-orange">₹{totalCalculated}</span>
            </div>
 
@@ -176,24 +176,24 @@ export default function Scene6SmartSplit({ data }: Props) {
            className="flex flex-col h-full p-6 space-y-6 overflow-y-auto"
         >
              <div className="text-center space-y-2">
-               <h2 className="text-2xl font-bold flex items-center justify-center gap-2">
+               <h2 className="text-2xl font-bold flex items-center justify-center gap-2 text-gray-900 dark:text-white">
                    Split Summary
                </h2>
-               <p className="text-gray-400 text-sm">Based on individual preferences.</p>
+               <p className="text-gray-500 dark:text-gray-400 text-sm">Based on individual preferences.</p>
              </div>
              
              <div className="flex-1 space-y-4">
                 {participants.map(p => (
                    <div key={p.id} className="glass-card p-4 flex justify-between items-center">
                       <div className="flex items-center gap-3">
-                         <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-lg border border-white/10">
+                         <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-lg border border-gray-100 dark:border-white/10">
                             {p.avatar}
                          </div>
                          <div>
-                            <div className="font-bold">{p.name}</div>
+                            <div className="font-bold text-gray-900 dark:text-white">{p.name}</div>
                             <div className="flex gap-1 mt-1">
                                {p.tags.map(t => (
-                                  <span key={t} className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">{t}</span>
+                                  <span key={t} className="text-[10px] bg-white dark:bg-white/10 border border-gray-100 dark:border-transparent px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-300">{t}</span>
                                ))}
                             </div>
                          </div>
@@ -203,20 +203,20 @@ export default function Scene6SmartSplit({ data }: Props) {
                 ))}
                 
                 {/* Host Yourself */}
-                <div className="glass-card p-4 flex justify-between items-center border-swiggy-orange/30">
+                <div className="glass-card p-4 flex justify-between items-center border-orange-200 dark:border-swiggy-orange/30">
                       <div className="flex items-center gap-3">
                          <div className="w-10 h-10 rounded-full bg-swiggy-orange flex items-center justify-center text-lg text-white">
                             👑
                          </div>
                          <div>
-                            <div className="font-bold">You</div>
+                            <div className="font-bold text-gray-900 dark:text-white">You</div>
                             <div className="flex gap-1 mt-1">
-                               <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">Non-Veg</span>
-                               <span className="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">Mocktail</span>
+                               <span className="text-[10px] bg-white dark:bg-white/10 border border-gray-100 dark:border-transparent px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-300">Non-Veg</span>
+                               <span className="text-[10px] bg-white dark:bg-white/10 border border-gray-100 dark:border-transparent px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-300">Mocktail</span>
                             </div>
                          </div>
                       </div>
-                      <div className="font-mono text-xl font-bold text-white">₹{Math.round((1800/2) + (300/2))}</div>
+                      <div className="font-mono text-xl font-bold text-gray-900 dark:text-white">₹{Math.round((1800/2) + (300/2))}</div>
                    </div>
              </div>
 
@@ -235,7 +235,7 @@ export default function Scene6SmartSplit({ data }: Props) {
       key="receipt"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col h-full bg-gray-900 relative"
+      className="flex flex-col h-full bg-gray-100 dark:bg-gray-900 relative"
     >
       <div className="flex-1 p-6 overflow-y-auto pb-48">
          <div className="bg-white text-black p-6 rounded-t-xl shadow-xl relative pb-12" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 98%)' }}>
@@ -274,19 +274,19 @@ export default function Scene6SmartSplit({ data }: Props) {
          </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 bg-gray-800 rounded-t-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-20">
-         <div className="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-6" />
+      <div className="absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-800 rounded-t-3xl p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-20 transition-colors">
+         <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-6" />
          
          <div className="flex justify-between items-end mb-6">
          <div>
-            <div className="text-gray-400 text-sm mb-1">Your Share</div>
-            <div className="text-4xl font-bold text-white flex items-center gap-1">
+            <div className="text-gray-500 dark:text-gray-400 text-sm mb-1">Your Share</div>
+            <div className="text-4xl font-bold text-gray-900 dark:text-white flex items-center gap-1">
                ₹{userShare}
                {hasPaid && <Check className="w-6 h-6 text-green-500" />}
             </div>
          </div>
          <div className="text-right">
-            <div className="text-xs text-gray-400 mb-1">Total Collected</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Collected</div>
             <div className="text-swiggy-orange font-mono">₹{totalPaid} / ₹930</div>
          </div>
          </div>
@@ -302,12 +302,12 @@ export default function Scene6SmartSplit({ data }: Props) {
             {!hasPaid ? (
                <button
                   onClick={handlePay}
-                  className="w-full py-3 rounded-xl font-medium text-sm bg-white/10 text-white hover:bg-white/20 active:scale-95 transition-all"
+                  className="w-full py-3 rounded-xl font-medium text-sm bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 active:scale-95 transition-all"
                >
                   Just Pay My Share (₹{userShare})
                </button>
             ) : (
-               <button disabled className="w-full py-3 rounded-xl font-medium text-sm bg-gray-700 text-green-400 flex items-center justify-center gap-2">
+               <button disabled className="w-full py-3 rounded-xl font-medium text-sm bg-gray-200 dark:bg-gray-700 text-green-600 dark:text-green-400 flex items-center justify-center gap-2">
                   <Check className="w-4 h-4" /> You Paid
                </button>
             )}
@@ -315,20 +315,20 @@ export default function Scene6SmartSplit({ data }: Props) {
 
          <div className="space-y-3">
          <div className="flex justify-between items-center text-sm">
-            <span className="flex items-center gap-2">
-               <span className="w-6 h-6 rounded-full bg-swiggy-orange flex items-center justify-center text-xs">👑</span>
+            <span className="flex items-center gap-2 text-gray-900 dark:text-white">
+               <span className="w-6 h-6 rounded-full bg-swiggy-orange flex items-center justify-center text-xs text-white">👑</span>
                You
             </span>
-            {hasPaid ? <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span> : <span className="text-yellow-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Paying...</span>}
+            {hasPaid ? <span className="text-green-500 dark:text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span> : <span className="text-yellow-500 dark:text-yellow-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Paying...</span>}
          </div>
          {participants.map(p => (
             <div key={p.id} className="flex justify-between items-center text-sm">
-               <span className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-gray-600 flex items-center justify-center text-xs">{p.avatar}</span>
+               <span className="flex items-center gap-2 text-gray-900 dark:text-white">
+                  <span className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center text-xs">{p.avatar}</span>
                   {p.name}
                </span>
                {p.paymentStatus === 'paid' ? (
-                  <span className="text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span>
+                  <span className="text-green-500 dark:text-green-400 flex items-center gap-1"><Check className="w-3 h-3"/> Paid</span>
                ) : (
                   <span className="text-gray-500 flex items-center gap-1"><Clock className="w-3 h-3"/> Pending</span>
                )}

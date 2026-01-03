@@ -4,12 +4,12 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 text-white font-sans antialiased overflow-x-hidden;
+    @apply bg-gray-50 text-gray-900 dark:bg-slate-900 dark:text-white font-sans antialiased overflow-x-hidden transition-colors duration-300;
   }
 }
 
 .glass-card {
-  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl rounded-2xl;
+  @apply bg-white/80 dark:bg-white/10 backdrop-blur-md border border-gray-200 dark:border-white/20 shadow-xl rounded-2xl transition-colors duration-300;
 }
 
 .btn-primary {

@@ -54,25 +54,25 @@ export default function Scene3Preference({ onNext }: Props) {
         exit={{ opacity: 0 }}
         className="flex flex-col items-center justify-center h-full text-center space-y-8 p-6"
       >
-        <div className="w-24 h-24 bg-swiggy-orange/10 rounded-full flex items-center justify-center relative">
+        <div className="w-24 h-24 bg-orange-100 dark:bg-swiggy-orange/10 rounded-full flex items-center justify-center relative">
            <div className="absolute inset-0 border-4 border-swiggy-orange/30 rounded-full animate-ping" />
            <span className="text-4xl">🗳️</span>
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-2xl font-bold">Waiting for friends...</h2>
-          <p className="text-gray-400">Everyone is casting their votes async.</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Waiting for friends...</h2>
+          <p className="text-gray-500 dark:text-gray-400">Everyone is casting their votes async.</p>
         </div>
 
         <div className="w-full max-w-xs space-y-4">
            {/* Simulate Other Users */}
            {['Aditya', 'Sneha', 'Kabir'].map((name, i) => (
-             <div key={name} className="flex items-center justify-between bg-white/5 p-3 rounded-lg">
+             <div key={name} className="flex items-center justify-between bg-white dark:bg-white/5 p-3 rounded-lg border border-gray-200 dark:border-transparent shadow-sm">
                 <div className="flex items-center gap-3">
-                   <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-xs">
+                   <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs">
                      {name[0]}
                    </div>
-                   <span>{name}</span>
+                   <span className="text-gray-900 dark:text-white">{name}</span>
                 </div>
                 {i < simulatedResponses ? (
                   <span className="text-green-500 font-bold text-sm">Submitted</span>
@@ -94,8 +94,8 @@ export default function Scene3Preference({ onNext }: Props) {
       className="flex flex-col h-full p-6 overflow-y-auto"
     >
       <header className="mb-6 space-y-2">
-        <h2 className="text-2xl font-bold">Your Preferences</h2>
-        <p className="text-gray-400 text-sm">Tell us what you're craving today.</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Preferences</h2>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">Tell us what you're craving today.</p>
       </header>
 
       <div className="space-y-6 flex-1 pb-6">
@@ -103,28 +103,28 @@ export default function Scene3Preference({ onNext }: Props) {
         {/* Dropdowns Group */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase">Cuisine</label>
+            <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Cuisine</label>
             <div className="relative">
               <select 
                 value={cuisine}
                 onChange={(e) => setCuisine(e.target.value)}
-                className="w-full bg-white/10 text-white rounded-lg p-3 appearance-none focus:outline-none focus:ring-2 focus:ring-swiggy-orange text-sm"
+                className="w-full bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent text-gray-900 dark:text-white rounded-lg p-3 appearance-none focus:outline-none focus:ring-2 focus:ring-swiggy-orange text-sm"
               >
-                {CUISINES.map(c => <option key={c} value={c} className="bg-gray-800">{c}</option>)}
+                {CUISINES.map(c => <option key={c} value={c} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">{c}</option>)}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
           </div>
           
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase">Ambiance</label>
+            <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Ambiance</label>
             <div className="relative">
               <select 
                 value={ambiance}
                 onChange={(e) => setAmbiance(e.target.value)}
-                className="w-full bg-white/10 text-white rounded-lg p-3 appearance-none focus:outline-none focus:ring-2 focus:ring-swiggy-orange text-sm"
+                className="w-full bg-white dark:bg-white/10 border border-gray-200 dark:border-transparent text-gray-900 dark:text-white rounded-lg p-3 appearance-none focus:outline-none focus:ring-2 focus:ring-swiggy-orange text-sm"
               >
-                {AMBIANCES.map(a => <option key={a} value={a} className="bg-gray-800">{a}</option>)}
+                {AMBIANCES.map(a => <option key={a} value={a} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">{a}</option>)}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
@@ -135,7 +135,7 @@ export default function Scene3Preference({ onNext }: Props) {
         <div className="space-y-6">
           <div className="space-y-3">
              <div className="flex justify-between">
-               <label className="text-xs font-bold text-gray-500 uppercase">Budget / Person</label>
+               <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Budget / Person</label>
                <span className="text-swiggy-orange font-bold">₹{budget}</span>
              </div>
              <input
@@ -145,13 +145,13 @@ export default function Scene3Preference({ onNext }: Props) {
                 step="50"
                 value={budget}
                 onChange={(e) => setBudget(Number(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
+                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
               />
           </div>
 
           <div className="space-y-3">
              <div className="flex justify-between">
-               <label className="text-xs font-bold text-gray-500 uppercase">Vicinity Range</label>
+               <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Vicinity Range</label>
                <span className="text-swiggy-orange font-bold">{vicinity} km</span>
              </div>
              <input
@@ -161,7 +161,7 @@ export default function Scene3Preference({ onNext }: Props) {
                 step="1"
                 value={vicinity}
                 onChange={(e) => setVicinity(Number(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
+                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-swiggy-orange"
               />
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function Scene3Preference({ onNext }: Props) {
         {/* Radio Groups */}
         <div className="space-y-4">
            <div className="space-y-2">
-             <label className="text-xs font-bold text-gray-500 uppercase">Alcohol Preference</label>
+             <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Alcohol Preference</label>
              <div className="grid grid-cols-4 gap-2">
                {['Mocktail', 'Cocktail', 'Both', 'None'].map(opt => (
                  <button
@@ -179,7 +179,7 @@ export default function Scene3Preference({ onNext }: Props) {
                      "py-2 rounded-lg text-xs font-medium transition-all",
                      alcohol === opt 
                        ? "bg-swiggy-orange text-white shadow-lg" 
-                       : "bg-white/5 text-gray-400 hover:bg-white/10"
+                       : "bg-white dark:bg-white/5 border border-gray-200 dark:border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/10"
                    )}
                  >
                    {opt}
@@ -189,7 +189,7 @@ export default function Scene3Preference({ onNext }: Props) {
            </div>
 
            <div className="space-y-2">
-             <label className="text-xs font-bold text-gray-500 uppercase">Food Preference</label>
+             <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Food Preference</label>
              <div className="grid grid-cols-3 gap-2">
                {['Veg', 'Non-Veg', 'Both'].map(opt => (
                  <button
@@ -199,7 +199,7 @@ export default function Scene3Preference({ onNext }: Props) {
                      "py-2 rounded-lg text-xs font-medium transition-all",
                      foodType === opt 
                        ? "bg-swiggy-orange text-white shadow-lg" 
-                       : "bg-white/5 text-gray-400 hover:bg-white/10"
+                       : "bg-white dark:bg-white/5 border border-gray-200 dark:border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/10"
                    )}
                  >
                    {opt}
@@ -213,7 +213,7 @@ export default function Scene3Preference({ onNext }: Props) {
 
       <button
         onClick={handleSubmit}
-        className="w-full py-4 rounded-xl font-bold text-lg bg-white text-black hover:bg-gray-100 transition-all shadow-lg active:scale-95"
+        className="w-full py-4 rounded-xl font-bold text-lg bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-lg active:scale-95"
       >
         Submit Preferences
       </button>

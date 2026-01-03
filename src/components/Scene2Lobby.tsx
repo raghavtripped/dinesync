@@ -40,30 +40,30 @@ export default function Scene2Lobby({ onNext, data }: Props) {
     >
       <header className="flex justify-between items-center mb-12">
         <div>
-          <h2 className="text-xl font-bold">{data.session.host_name}'s Dinner Party</h2>
-          <div className="flex items-center gap-2 text-sm text-gray-400">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">{data.session.host_name}'s Dinner Party</h2>
+          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
             <Users className="w-4 h-4" />
             <span>{presentParticipants.length + 1}/4 Joined</span>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center border border-gray-200 dark:border-transparent">
           <span className="text-xl">👑</span>
         </div>
       </header>
 
       <div className="flex-1 relative flex items-center justify-center min-h-[400px]">
         {/* Table/Center */}
-        <div className="absolute w-48 h-48 rounded-full border-4 border-dashed border-white/10 flex items-center justify-center">
-          <span className="text-white/20 font-medium">Waiting...</span>
+        <div className="absolute w-48 h-48 rounded-full border-4 border-dashed border-gray-200 dark:border-white/10 flex items-center justify-center">
+          <span className="text-gray-400 dark:text-white/20 font-medium">Waiting...</span>
         </div>
 
         {/* Host */}
         <motion.div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-swiggy-orange to-red-500 flex items-center justify-center text-3xl shadow-lg border-2 border-white relative">
               {host.avatar}
-              <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-gray-900"></div>
+              <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></div>
            </div>
-           <span className="font-medium text-sm">{host.name}</span>
+           <span className="font-medium text-sm text-gray-900 dark:text-white">{host.name}</span>
         </motion.div>
 
         {/* Participants */}
@@ -86,19 +86,19 @@ export default function Scene2Lobby({ onNext, data }: Props) {
                 className={cn("absolute flex flex-col items-center gap-2", pos)}
               >
                 <div className="relative group cursor-pointer">
-                  <div className="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center text-3xl shadow-lg border-2 border-white/20 group-hover:border-swiggy-orange transition-colors">
+                  <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-3xl shadow-lg border-2 border-gray-100 dark:border-white/20 group-hover:border-swiggy-orange transition-colors">
                     {p.avatar}
                   </div>
                   {/* Nudge Button */}
                   <button 
-                    className="absolute -right-2 -top-2 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shadow-lg scale-0 group-hover:scale-100 transition-transform"
+                    className="absolute -right-2 -top-2 w-8 h-8 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg scale-0 group-hover:scale-100 transition-transform"
                     onClick={() => navigator.vibrate?.(100)}
                   >
                     <Bell className="w-4 h-4 fill-current" />
                   </button>
-                  <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-gray-900"></div>
+                  <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></div>
                 </div>
-                <span className="font-medium text-sm">{p.name}</span>
+                <span className="font-medium text-sm text-gray-900 dark:text-white">{p.name}</span>
               </motion.div>
             );
           })}
@@ -113,7 +113,7 @@ export default function Scene2Lobby({ onNext, data }: Props) {
             "w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2",
             allJoined 
               ? "bg-swiggy-orange text-white shadow-lg shadow-orange-500/20 hover:scale-[1.02]" 
-              : "bg-white/10 text-gray-500 cursor-not-allowed"
+              : "bg-gray-200 dark:bg-white/10 text-gray-400 dark:text-gray-500 cursor-not-allowed"
           )}
         >
           {allJoined ? (

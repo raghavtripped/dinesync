@@ -74,11 +74,11 @@ export default function Scene4AIRevelation({ onNext, data }: Props) {
       className="flex flex-col h-full p-6"
     >
       <header className="mb-6">
-        <h2 className="text-2xl font-bold flex items-center gap-2">
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-gray-900 dark:text-white">
           <Sparkles className="text-swiggy-orange" />
           Top Picks for You
         </h2>
-        <p className="text-sm text-gray-400">Based on everyone's cravings</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Based on everyone's cravings</p>
       </header>
 
       <div className="flex-1 space-y-4 overflow-y-auto pb-6">
@@ -95,16 +95,16 @@ export default function Scene4AIRevelation({ onNext, data }: Props) {
               "absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg",
               index === 0 
                 ? "bg-gradient-to-r from-swiggy-orange to-pink-500 text-white animate-pulse" 
-                : "bg-black/50 backdrop-blur-md text-white"
+                : "bg-white/80 dark:bg-black/50 backdrop-blur-md text-gray-900 dark:text-white"
             )}>
               {rec.match_score}% Match
             </div>
 
-            <div className="h-32 bg-gray-800 relative">
+            <div className="h-32 bg-gray-100 dark:bg-gray-800 relative">
                <img src={rec.image} alt={rec.name} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                <div className="absolute bottom-3 left-3">
-                 <h3 className="text-xl font-bold">{rec.name}</h3>
+                 <h3 className="text-xl font-bold text-white">{rec.name}</h3>
                  <div className="flex gap-2 text-xs mt-1">
                    {rec.tags.map(tag => (
                      <span key={tag} className="bg-white/20 px-2 py-0.5 rounded text-white/90">{tag}</span>
@@ -113,8 +113,8 @@ export default function Scene4AIRevelation({ onNext, data }: Props) {
                </div>
             </div>
             
-            <div className="p-4 flex justify-between items-center bg-white/5">
-              <div className="text-gray-400 text-sm">
+            <div className="p-4 flex justify-between items-center bg-gray-50 dark:bg-white/5">
+              <div className="text-gray-500 dark:text-gray-400 text-sm">
                 {rec.price_level} • 35 mins • 4.2★
               </div>
               {index === 0 && (
