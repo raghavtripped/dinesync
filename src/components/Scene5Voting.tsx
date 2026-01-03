@@ -402,7 +402,7 @@ export default function Scene5Voting({ onNext, data }: Props) {
             animate={{ y: 0, opacity: 1 }}
             className="mt-6"
           >
-            <div className="bg-green-500/20 border border-green-500 text-green-200 p-4 rounded-xl text-center mb-4">
+            <div className="bg-green-100 dark:bg-green-500/20 border border-green-500 text-green-800 dark:text-green-200 p-4 rounded-xl text-center mb-4 font-medium">
               It's decided! We're eating <strong>{data.recommendations.find(r => r.id === winner)?.name}</strong>.
             </div>
             <button
