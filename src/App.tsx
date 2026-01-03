@@ -14,7 +14,7 @@ const data = rawData as SessionData;
 
 function App() {
   const [step, setStep] = useState<AppStep>('invitation');
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
